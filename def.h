@@ -23,8 +23,8 @@ public :
 	card c1[3];
 
 	pack & operator=(const pack & B);
-	void add_card(int label);	//0: succeed, 1: failed
-	void blank();
+	void add_card(int label);
+	void blank();	// equivalent to init
 };
 
 
@@ -37,20 +37,24 @@ public :
 
 	deck();
 	void init();
-	void update_provide(player a1);
+	void update_provide(player& a1);
 };
 
 class player
 {
 public :
 	int Need[4];
+	int tot_Need[4];
 	card *need[4];
 	int pack_drew;
 	player();
+	~player();
 
-	void init_need_card(int n1[4]);
-	void init_need_num();
-	int draw_deck(deck & d1);
-	void draw_decks(deck & d1);
+	void init_need_card(int n1[4]);		// initialize cards that needed
+	void init_need_num();				// initialize number of each cards needed and total need
+	int draw_deck(deck & d1);			// draw one card, update player need, but not update provide
+	void draw_decks(deck & d1);			// draw decks until get need, update provide
+	int draw_all_cards(deck & d1, double* root_ratio);	// draw all cards needed, return pack_drew;
+	double draw_all_cards(deck & d1, double* root_ratio, int num);
 };
 #endif
